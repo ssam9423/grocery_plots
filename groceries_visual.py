@@ -16,26 +16,28 @@ FOLDER = 'Grocery Plots/'
 grocery_list['food_type'] = grocery_list['food_type'].fillna('other')
 
 # Stocked - Unique Food Count
+color_count = len(grocery_list[grocery_list['is_stocked']]['food_type'].unique())
 stocked_type = sns.countplot(grocery_list[grocery_list['is_stocked']], x='food_type',
-                             palette=sns.color_palette("Paired",n_colors=8),
+                             palette=sns.color_palette('Paired',n_colors=color_count),
                              hue='food_type')
 file_name = 'Stocked (Food Type vs Unique Food Count)'
 stocked_type.set_title(file_name)
 stocked_type.set_xlabel('Food Type')
 stocked_type.set_ylabel('Unique Food Count')
-plt.savefig(FOLDER + file_name + '.png', dpi=300)
+# plt.savefig(FOLDER + file_name + '.png', dpi=300)
 plt.show()
 
 # Stocked - Show Food Type and Name
+color_count = len(grocery_list[grocery_list['is_stocked']]['food'].unique())
 stocked_stacked = sns.histplot(data=grocery_list[grocery_list['is_stocked']], x='food_type',
                                weights='stocked_num',
-                               palette=sns.color_palette("Paired"),
+                               palette=sns.color_palette('Spectral',n_colors=color_count),
                                hue='food', multiple="stack")
 file_name = 'Stocked (Food Type vs Total Food Count)'
 stocked_stacked.set_title(file_name)
 stocked_stacked.set_xlabel('Food Type')
 stocked_stacked.set_ylabel('Total Food Count')
-plt.savefig(FOLDER + file_name + '.png', dpi=300)
+# plt.savefig(FOLDER + file_name + '.png', dpi=300)
 plt.show()
 
 # Need to Buy - Show Food Type
@@ -51,5 +53,6 @@ file_name = 'To Buy Food (Types vs Total Food Count)'
 stocked_stacked.set_title(file_name)
 stocked_stacked.set_xlabel('Food Type')
 stocked_stacked.set_ylabel('Total Food Count')
-plt.savefig(FOLDER + file_name + '.png', dpi=300)
+stocked_stacked.locator_params(axis='y', integer=True)
+# plt.savefig(FOLDER + file_name + '.png', dpi=300)
 plt.show()
